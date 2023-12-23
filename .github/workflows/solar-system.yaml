@@ -40,7 +40,7 @@ jobs:
       run: npm test
 
     - name: Archive Test Result
-      if: failure() && steps.nodejs-unit-testing-step.outcome == 'failure' || steps.nodejs-unit-testing-step.outcome == 'success'
+      if: always() # this step will be executed regardless of the previous step result. Here we need to see testing report to troubleshoot.
       uses: actions/upload-artifact@v3
       with:
         name: Mocha-Test-Result
