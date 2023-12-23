@@ -32,6 +32,12 @@ jobs:
       with:
         node-version: ${{ matrix.nodejs_version }}
 
+    - name: Cache NPM dependencies
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }} # with the help of "hashFiles() "whenever this value changes, cache invalidates and new value is cached.
+
     - name: Install Dependencies
       run: npm install
 
@@ -57,6 +63,12 @@ jobs:
       with:
         node-version: 18
 
+    - name: Cache NPM dependencies
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+        
     - name: Install Dependencies
       run: npm install
 
@@ -69,4 +81,4 @@ jobs:
       with:
         name: Code-Coverage-Result
         path: coverage
-        retention-days: 5
+        retention-days: 5 # this enables to tune storage time of artifacts, default is 90
