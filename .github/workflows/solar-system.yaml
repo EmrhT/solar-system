@@ -110,7 +110,34 @@ jobs:
         name: Code-Coverage-Result
         path: coverage
         retention-days: 5 # this enables to tune storage time of artifacts, default is 90
-      
+
+  reports-s3:
+    needs: [code-coverage, unit-testing]
+    name: Reports S3
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Download Mocha Test Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Mocha-Test-Result
+
+      - name: Download Code Coverage Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Code-Coverage-Result
+
+      - name: Merge Test Files
+        run: |
+          ls -ltr
+          mkdir reports-${{ github.sha }}
+          mv cobertura-coverage.xml reports-${{ github.sha }}/
+          mv test-results.xml reports-${{ github.sha }}/
+          ls -ltr reports-${{ github.sha }}/
+          
+      - name: Upload to AWS S3
+        run: echo "uploading......"
+
   containerization:
     name: Containerization
     needs: [unit-testing, code-coverage] # needed for sequential execution after unit test and code-coverage
