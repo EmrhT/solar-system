@@ -1,3 +1,5 @@
+[![Solar System Workflow](https://github.com/EmrhT/solar-system/actions/workflows/solar-system.yaml/badge.svg?branch=main)](https://github.com/EmrhT/solar-system/actions/workflows/solar-system.yaml)
+
 # Solar System NodeJS Application
 
 A simple HTML+MongoDB+NodeJS project to display Solar System and it's planets.
